@@ -1,0 +1,26 @@
+diff --git a/node_modules/twirp-ts/build/twirp/http.client.js b/node_modules/twirp-ts/build/twirp/http.client.js
+index b7753bb..1cfa413 100644
+--- a/node_modules/twirp-ts/build/twirp/http.client.js
++++ b/node_modules/twirp-ts/build/twirp/http.client.js
+@@ -47,7 +47,7 @@ const NodeHttpRPC = (options) => ({
+             }
+             const prefix = url.pathname !== "/" ? url.pathname : "";
+             const req = client
+-                .request(Object.assign(Object.assign({}, (options ? options : {})), { method: "POST", protocol: url.protocol, host: url.hostname, port: url.port ? url.port : isHttps ? 443 : 80, path: `${prefix}/${service}/${method}`, headers: Object.assign(Object.assign({}, (options.headers ? options.headers : {})), { "Content-Type": contentType, "Content-Length": contentType === "application/protobuf"
++                .request(Object.assign(Object.assign({}, (options ? options : {})), { method: "POST", protocol: url.protocol, host: url.hostname, port: url.port ? url.port : isHttps ? 443 : 80, path: `${prefix}/${service}/${method}`, headers: Object.assign(Object.assign({}, (options.headers ? options.headers : {})), { "Content-Type": `${contentType};message=${method}RPC`, "Content-Length": contentType === "application/protobuf"
+                         ? Buffer.byteLength(requestData)
+                         : Buffer.from(requestData).byteLength }) }), (res) => {
+                 res.on("data", (chunk) => responseChunks.push(chunk));
+diff --git a/node_modules/twirp-ts/build/twirp/server.js b/node_modules/twirp-ts/build/twirp/server.js
+index db9e788..9bef7f4 100644
+--- a/node_modules/twirp-ts/build/twirp/server.js
++++ b/node_modules/twirp-ts/build/twirp/server.js
+@@ -131,7 +131,7 @@ class TwirpServer {
+                     this.invokeHook("requestPrepared", ctx),
+                 ]);
+                 resp.statusCode = 200;
+-                resp.setHeader("Content-Type", mimeContentType);
++                resp.setHeader("Content-Type", `${mimeContentType};message=${method}RPC`);
+                 resp.end(response);
+             }
+             catch (e) {

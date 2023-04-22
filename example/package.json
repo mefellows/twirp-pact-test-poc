@@ -1,0 +1,27 @@
+{
+  "name": "twirp-ts-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "test": "ENABLE_FEATURE_V4=true jest",
+    "postinstall": "patch-package"
+  },
+  "author": "Fabrizio Fenoglio",
+  "license": "ISC",
+  "dependencies": {
+    "@pact-foundation/pact": "^11.0.2",
+    "@protobuf-ts/plugin": "^2.0.0-alpha.27",
+    "axios": "^0.21.2",
+    "express": "^4.17.1",
+    "ts-proto": "^1.81.3",
+    "twirp-ts": "^2.4.0"
+  },
+  "devDependencies": {
+    "@moebius/http-graceful-shutdown": "^1.1.0",
+    "@types/express": "^4.17.12",
+    "jest": "^27.5.1",
+    "patch-package": "^6.5.1"
+  }
+}
